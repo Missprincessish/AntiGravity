@@ -1,0 +1,14 @@
+# Dependencies
+**/node_modules
+**/.vite
+
+# IDEs
+.vscode/
+
+# Misc
+.DS_Store
+*.docx
+*.jpeg
+*.png
+project_status.txt
+Guru tools list.txt
