@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { AgentConfig, CategoryRegistry } from '@repo/core/types';
-import { executeAgentQuery } from '@repo/core/engine';
+import { executeAgentQuery, validateAccess } from '@repo/core';
 
 interface Message {
     role: 'user' | 'assistant';
@@ -16,12 +16,21 @@ interface ChatInterfaceProps {
 }
 
 export const ChatInterface: React.FC<ChatInterfaceProps> = ({ agent, categories, agents, onAgentChange, onBack }) => {
-    const [messages, setMessages] = useState<Message[]>([
-        {
+    const [messages, setMessages] = useState<Message[]>(() => {
+        const savedMessages = localStorage.getItem(`chatHistory_${agent.id}`);
+        if (savedMessages) {
+            return JSON.parse(savedMessages);
+        }
+        return [{
             role: 'assistant',
             content: `Hello! I am your ${agent.name} helper. I can help you with ${agent.description.toLowerCase()} How can I help you today?`
-        }
-    ]);
+        }];
+    });
+    
+    useEffect(() => {
+        localStorage.setItem(`chatHistory_${agent.id}`, JSON.stringify(messages));
+    }, [messages, agent.id]);
+
     const [input, setInput] = useState('');
     const [isTyping, setIsTyping] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -38,6 +47,25 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ agent, categories,
         if (!input.trim()) return;
 
         const userInput = input.trim();
+        
+        // URL extraction and validation
+        const urlRegex = /(https?:\/\/[^\s]+)/g;
+        const urls = userInput.match(urlRegex);
+
+        if (urls) {
+            for (const url of urls) {
+                if (!validateAccess(url, agent)) {
+                    setMessages((prev) => [
+                        ...prev,
+                        { role: 'user', content: userInput },
+                        { role: 'assistant', content: `Sorry, I cannot access the URL: ${url}. It is not in my allowed list of domains.` }
+                    ]);
+                    setInput('');
+                    return;
+                }
+            }
+        }
+
         const userMessage: Message = { role: 'user', content: userInput };
         setMessages((prev) => [...prev, userMessage]);
         setInput('');

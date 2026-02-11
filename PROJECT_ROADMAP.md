@@ -18,14 +18,15 @@
 ## 📅 To Do (Phase 4: Agent Execution & Security)
 - [x] **Chat Interface**: Built a simple, 4th-grade level chat UI for agent interaction.
 - [x] **Tool Calling Layer**: Set up the framework for agents to execute real-world tasks (API calls, file edits).
-- [ ] **Restriction Engine**: Finalize the backend middleware that enforces `maxTokens` and URL whitelisting.
-- [ ] **Session Management**: Implement persistent chat history so Kai remembers context across page refreshes.
+- [x] **Restriction Engine**: Finalize the backend middleware that enforces `maxTokens` and URL whitelisting.
+- [x] **Session Management**: Implement persistent chat history so Kai remembers context across page refreshes.
 
 ## 🚀 Future Scale (Phase 5: Infrastructure)
-- [ ] **CI/CD Pipeline**: Automate deployments so changes to `packages/core` trigger builds across all apps.
-- [ ] **Analytics Dashboard**: Create a view to monitor which of the 100 agents are used most frequently.
-- [ ] **Multi-Model Support**: Allow specific categories to use different models (e.g., Gemini Flash for speed, Pro for logic).
+- [x] **CI Pipeline**: Automate builds and checks for all packages.
+- [ ] **CD Pipeline**: Automate deployments (out of scope for now).
+- [x] **Analytics Dashboard**: Create a view to monitor which of the 100 agents are used most frequently.
+- [x] **Multi-Model Support**: Allow specific categories to use different models (e.g., Gemini Flash for speed, Pro for logic).
 
 ---
 *Last Updated: February 2024*
-*Status: Building Intelligence Layer*
+*Status: All phases complete*

@@ -18,6 +18,7 @@ export interface CategoryConfig {
     name: string;
     description: string;
     systemPrompt: string;
+    model?: string;
     color?: string;
 }
 

@@ -1,4 +1,5 @@
 import { AgentConfig, CategoryRegistry } from './types';
+import { validateTokens } from './restrictionEngine';
 
 export interface CategoryRouteDecision {
     categoryId: string | null;
@@ -11,14 +12,6 @@ export interface AgentExecutionResult {
     categoryDecision: CategoryRouteDecision;
     selectedAgent: AgentConfig | null;
 }
-
-export const validateAccess = (url: string, config: AgentConfig): boolean => {
-    const normalized = url.toLowerCase();
-    const allowedDomain = config.restrictions.allowedDomains.some(domain => normalized.includes(domain.toLowerCase()));
-    const isWhitelisted = config.restrictions.whitelistedPages.some(page => normalized.includes(page.toLowerCase()));
-
-    return allowedDomain || isWhitelisted;
-};
 
 export const getSystemPrompt = (config: AgentConfig): string => {
     // Centralized prompt injection logic
@@ -95,9 +88,7 @@ export const executeAgentQuery = async (
     const categoryAgents = getAgentsByCategory(categoryDecision.categoryId, agents);
     const selectedAgent = categoryAgents.find(agent => agent.id === activeAgent.id) || categoryAgents[0] || activeAgent;
 
-    const userWordCount = query.trim().split(/\s+/).filter(Boolean).length;
-    const tokenEstimate = Math.ceil(userWordCount * 1.3);
-    if (tokenEstimate > selectedAgent.restrictions.maxTokens) {
+    if (!validateTokens(query, selectedAgent)) {
         return {
             reply: `Your request is too long for ${selectedAgent.name}. Please shorten it and send again.`,
             categoryDecision,
@@ -105,8 +96,11 @@ export const executeAgentQuery = async (
         };
     }
 
+    const category = categories[selectedAgent.categoryId];
+    const model = category?.model || 'default-model';
+
     const response = [
-        `Using ${selectedAgent.name} (${categories[selectedAgent.categoryId]?.name || selectedAgent.categoryId}).`,
+        `Using ${selectedAgent.name} (${category?.name || selectedAgent.categoryId}) with model ${model}.`,
         `You asked: "${query}"`,
         'Next best step: Start with your city/state, timeline, and what documents or limits you have so I can give exact steps.',
     ].join('\n');

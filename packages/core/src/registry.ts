@@ -17,6 +17,7 @@ export const CATEGORIES: CategoryRegistry = {
         name: 'Money & Home',
         description: 'Help with money, ID cards, and finding a place to live.',
         systemPrompt: 'You are a helpful coach. Help people find a home and fix their ID cards.',
+        model: 'gemini-flash',
         color: 'indigo',
     },
     growth: {
@@ -24,6 +25,7 @@ export const CATEGORIES: CategoryRegistry = {
         name: 'Jobs & School',
         description: 'Find a job, learn new things, and make more money.',
         systemPrompt: 'You are a friendly teacher. Help people find work and learn new skills.',
+        model: 'gemini-flash',
         color: 'pink',
     },
     wellness: {
@@ -31,6 +33,7 @@ export const CATEGORIES: CategoryRegistry = {
         name: 'Food & Health',
         description: 'Get help with food, doctors, and feeling better.',
         systemPrompt: 'You are a kind helper. Help people find food and stay healthy.',
+        model: 'gemini-pro',
         color: 'emerald',
     },
     protection: {
@@ -38,6 +41,7 @@ export const CATEGORIES: CategoryRegistry = {
         name: 'Safety & Laws',
         description: 'Help with court, lawyers, and staying safe.',
         systemPrompt: 'You are a safety guide. Help people with legal rules and staying safe.',
+        model: 'gemini-pro',
         color: 'amber',
     },
     family: {
@@ -45,6 +49,7 @@ export const CATEGORIES: CategoryRegistry = {
         name: 'Family & Fun',
         description: 'Help with kids, childcare, and free things to do.',
         systemPrompt: 'You are a family friend. Help parents find things for their kids.',
+        model: 'gemini-pro',
         color: 'cyan',
     },
 };
