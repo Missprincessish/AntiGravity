@@ -8,6 +8,8 @@ import { CATEGORIES, AGENTS } from '@repo/core/registry';
 import { AgentConfig } from '@repo/core/types';
 import Analytics from './pages/Analytics';
 
+const LANGUAGE_STORAGE_KEY = 'kai_app_language';
+
 function ChatView() {
     const [activeAgent, setActiveAgent] = useState<AgentConfig | null>(() => {
         const savedAgent = localStorage.getItem('activeAgent');
@@ -18,6 +20,10 @@ function ChatView() {
         return null;
     });
 
+    const [userLanguage, setUserLanguage] = useState<string>(() => {
+        return localStorage.getItem(LANGUAGE_STORAGE_KEY) || 'en';
+    });
+
     useEffect(() => {
         if (activeAgent) {
             localStorage.setItem('activeAgent', JSON.stringify(activeAgent));
@@ -25,6 +31,10 @@ function ChatView() {
             localStorage.removeItem('activeAgent');
         }
     }, [activeAgent]);
+
+    useEffect(() => {
+        localStorage.setItem(LANGUAGE_STORAGE_KEY, userLanguage);
+    }, [userLanguage]);
 
     const categoriesArray = Object.values(CATEGORIES);
 
@@ -44,6 +54,8 @@ function ChatView() {
                             const agent = AGENTS.find(a => a.id === id);
                             if (agent) handleSetAgent(agent);
                         }}
+                        userLanguage={userLanguage}
+                        onLanguageChange={setUserLanguage}
                     />
                     <div className="p-4">
                         <Link to="/analytics" className="text-blue-500 hover:underline">Analytics Dashboard</Link>
@@ -56,6 +68,7 @@ function ChatView() {
                     agent={activeAgent}
                     categories={CATEGORIES}
                     agents={AGENTS}
+                    userLanguage={userLanguage}
                     onAgentChange={(nextAgent) => handleSetAgent(nextAgent)}
                     onBack={() => handleSetAgent(null)}
                 />

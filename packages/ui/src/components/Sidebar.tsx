@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { CategoryConfig, AgentConfig } from '@repo/core/types';
+import { SUPPORTED_LANGUAGES } from '@repo/core/translationService';
 
 interface SidebarProps {
     categories: CategoryConfig[];
     agents: AgentConfig[];
     onSelectAgent: (agentId: string) => void;
+    /** App language; when not English, the language bot (translation) is active for that language only. */
+    userLanguage?: string;
+    onLanguageChange?: (code: string) => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ categories, agents, onSelectAgent }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ categories, agents, onSelectAgent, userLanguage = 'en', onLanguageChange }) => {
     const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
     const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -54,6 +58,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ categories, agents, onSelectAg
                     </div>
                 ))}
             </div>
+
+            {!isCollapsed && onLanguageChange && (
+                <div className="p-3 border-t border-slate-200 dark:border-slate-800">
+                    <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5">App language</label>
+                    <select
+                        value={userLanguage}
+                        onChange={(e) => onLanguageChange(e.target.value)}
+                        className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-brand-500 dark:focus:ring-neon-blue outline-none"
+                    >
+                        {SUPPORTED_LANGUAGES.map(({ code, name }) => (
+                            <option key={code} value={code}>{name}</option>
+                        ))}
+                    </select>
+                    {userLanguage !== 'en' && (
+                        <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">Translation on for this language</p>
+                    )}
+                </div>
+            )}
         </aside>
     );
 };

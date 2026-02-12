@@ -6,6 +6,28 @@
 
 ---
 
+# Rules for all tools in this category
+
+**Every tool in this category must follow these rules.**
+
+---
+
+## 1. Translation rule
+
+- **Before** user input is sent to the tool/Kai, it **must** be passed through the app’s **translation tool** so the request is in the **app language of the user’s choice**.
+- **Before** any response from Kai is shown to the user, it **must** be passed through the translation tool into the **user’s chosen app language**.
+- In short: respect the user’s selected language by handing content to the translation tool before it goes to Kai (for input) and before it is shown to the user (for output).
+
+---
+
+## 2. Location rule (city / state / ZIP)
+
+- **Kai must have already asked the user for their city, state, and ZIP code** before this agent/tool is activated. If location is missing, Kai should ask for it first and not run the tool until it has city, state, and (when possible) ZIP.
+- **Each tool must use the user’s county, state, and city** when using its whitelisted sites: search or navigate within those sites by the user’s location so that results are **local** (e.g. local legal aid offices, local courts, state/county programs, local victim services).
+- The tool’s job is to find resources **from its whitelist** but **refined by the user’s county/state/city** so the information is relevant to where the user lives.
+
+---
+
 ## Your original Legal & Systems tools (Guru items 41–50)
 
 - 41. Court Basics: What to wear and how to address a judge.
@@ -33,6 +55,8 @@
 
 **Goal:** Answer questions about finding free lawyers, eligibility, what to bring, and how legal aid works.
 
+**Rules:** Apply the **translation rule** (hand off to translation tool before input to Kai and before output to user, per user’s app language). Apply the **location rule**: use the user’s city, state, and ZIP (already collected by Kai) to search and navigate whitelisted sites for **local** legal aid offices and programs.
+
 | Type | Domain | Why |
 |------|--------|-----|
 | Gov | lsc.gov | LSC-funded programs, find legal aid by location |
@@ -51,6 +75,8 @@
 
 **Goal:** Answer questions about civil rights, criminal rights, housing, work, and government actions.
 
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites for state- and local-specific rights and resources.
+
 | Type | Domain | Why |
 |------|--------|-----|
 | Gov | justice.gov | DOJ rights, enforcement, complaints |
@@ -68,6 +94,8 @@
 ## 3. Domestic Violence / Stay Safe (`stay-safe`)
 
 **Goal:** Answer questions about leaving abuse, safety planning, shelters, hotlines, and support for all survivors.
+
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites to find **local** shelters, hotlines, and victim services.
 
 | Type | Domain | Why |
 |------|--------|-----|
@@ -89,6 +117,8 @@
 
 **Goal:** Answer questions about disputing bills, filing complaints, scams, and government decisions.
 
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites for state and local complaint offices and resources.
+
 | Type | Domain | Why |
 |------|--------|-----|
 | Gov | ftc.gov | Scams, complaints, consumer rights |
@@ -108,6 +138,8 @@
 
 **Goal:** Answer questions about discrimination, harassment, filing with EEOC, and retaliation.
 
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites for the relevant EEOC office and state/local fair employment resources.
+
 | Type | Domain | Why |
 |------|--------|-----|
 | Gov | eeoc.gov | Laws, filing charges, process, deadlines |
@@ -124,6 +156,8 @@
 ## 6. Immigration & Citizenship (`immigration-citizenship`)
 
 **Goal:** Answer questions about green cards, citizenship, visas, DACA, and how to apply — including academically credited guides.
+
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites for **local** USCIS offices, legal service providers, and state-specific immigration resources.
 
 | Type | Domain | Why |
 |------|--------|-----|
@@ -146,6 +180,8 @@
 
 **Goal:** Answer questions about crime victim compensation, eligibility, application, and support.
 
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites for **local** victim compensation programs and offices.
+
 | Type | Domain | Why |
 |------|--------|-----|
 | Gov | ojp.gov | OJP programs and grants |
@@ -163,6 +199,8 @@
 ## 8. Voting Rights & How to Register (`voting-rights`)
 
 **Goal:** Answer questions about registration, ID requirements, absentee voting, and rights.
+
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites for **local** election offices, registration, and state/county voting rules.
 
 | Type | Domain | Why |
 |------|--------|-----|
@@ -182,6 +220,8 @@
 
 **Goal:** Answer questions about fair housing, protected classes, and how to file a complaint.
 
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites for **local** HUD offices and fair housing organizations.
+
 | Type | Domain | Why |
 |------|--------|-----|
 | Gov | hud.gov | Fair housing, complaint process, HUD offices |
@@ -197,6 +237,8 @@
 ## 10. Restraining Order / Protection Orders (`restraining-order`) — All genders and sexes
 
 **Goal:** Answer questions about getting a protection order for anyone (all genders, sexes, and relationships), including LGBTQ+ and male survivors.
+
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites for **local** courts, forms, and protection-order procedures (county/state).
 
 | Type | Domain | Why |
 |------|--------|-----|
@@ -219,6 +261,8 @@
 
 **Goal:** Answer questions about how child support works, applying, modifying, enforcing, and keeping papers organized.
 
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites for the **local** child support office and state/county procedures.
+
 | Type | Domain | Why |
 |------|--------|-----|
 | Gov | acf.hhs.gov | Office of Child Support Enforcement, policy and programs |
@@ -235,6 +279,8 @@
 ## 12. Elder Abuse & Protection (`elder-abuse`)
 
 **Goal:** Answer questions about reporting elder abuse, resources, and protection.
+
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites for **local** adult protective services and elder abuse resources.
 
 | Type | Domain | Why |
 |------|--------|-----|
@@ -254,6 +300,8 @@
 
 **Goal:** Answer questions about reporting identity theft, credit freezes, and recovery steps.
 
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites for state attorneys general, local reporting, and state-specific recovery resources where available.
+
 | Type | Domain | Why |
 |------|--------|-----|
 | Gov | identitytheft.gov | FTC reporting and recovery plan |
@@ -271,6 +319,8 @@
 
 **Goal:** Answer questions about filing in small claims court, limits, and process.
 
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites for **local** small claims court (county/court location, filing, limits).
+
 | Type | Domain | Why |
 |------|--------|-----|
 | Gov | uscourts.gov | Federal courts, self-help |
@@ -286,6 +336,8 @@
 ## 15. Civil Rights Complaints (`civil-rights`)
 
 **Goal:** Answer questions about filing civil rights complaints (housing, employment, education, voting, etc.).
+
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites for the **local** DOJ/EEOC/HUD/ED office or regional contact and state agencies.
 
 | Type | Domain | Why |
 |------|--------|-----|
@@ -305,6 +357,8 @@
 ## 16. Record Expungement / Clearing Your Record (`record-expungement`)
 
 **Goal:** Answer questions about expungement, sealing, eligibility, and how to apply — with verifiable, cited sources.
+
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites for **state and county** expungement procedures, courts, and local legal aid.
 
 | Type | Domain | Why |
 |------|--------|-----|
@@ -327,6 +381,8 @@
 
 **Goal:** Answer questions about what to wear in court, how to address a judge, courtroom behavior, and what to expect.
 
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites for **local** court (county/state) rules and courthouse info.
+
 | Type | Domain | Why |
 |------|--------|-----|
 | Gov | uscourts.gov | Federal court procedures, self-help, dress and conduct |
@@ -342,6 +398,8 @@
 ## 18. Public Records (`public-records`) — Guru #42
 
 **Goal:** Answer questions about how to check for old tickets, criminal records, and how to get copies of public records.
+
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites for **state and county** record checks, clerks, and procedures.
 
 | Type | Domain | Why |
 |------|--------|-----|
@@ -360,6 +418,8 @@
 
 **Goal:** Answer questions about what a jury duty letter means, how to respond, postponement, and what to expect.
 
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites for the **local** court (county/state) that sent the notice and its jury instructions.
+
 | Type | Domain | Why |
 |------|--------|-----|
 | Gov | uscourts.gov | Federal jury service, FAQs, how to respond |
@@ -375,6 +435,8 @@
 ## 20. Notary Public (`notary-public`) — Guru #50
 
 **Goal:** Answer questions about what a notary is, when you need one, and how to find a notary.
+
+**Rules:** Apply the **translation rule** and **location rule**; use the user’s city/state/zip within whitelisted sites to find **local** notaries and state/county notary requirements.
 
 | Type | Domain | Why |
 |------|--------|-----|

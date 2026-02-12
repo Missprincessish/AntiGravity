@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { AgentConfig, CategoryRegistry } from '@repo/core/types';
-import { executeAgentQuery, validateAccess } from '@repo/core';
+import { executeAgentQuery, validateAccess, shouldUseLanguageBot, translateToEnglish, translateFromEnglish } from '@repo/core';
 
 interface Message {
     role: 'user' | 'assistant';
@@ -11,11 +11,13 @@ interface ChatInterfaceProps {
     agent: AgentConfig;
     categories: CategoryRegistry;
     agents: AgentConfig[];
+    /** User's app language. When not English, the language bot (translation) is inserted in the chain for this language only. */
+    userLanguage?: string;
     onAgentChange: (agent: AgentConfig) => void;
     onBack: () => void;
 }
 
-export const ChatInterface: React.FC<ChatInterfaceProps> = ({ agent, categories, agents, onAgentChange, onBack }) => {
+export const ChatInterface: React.FC<ChatInterfaceProps> = ({ agent, categories, agents, userLanguage = 'en', onAgentChange, onBack }) => {
     const [messages, setMessages] = useState<Message[]>(() => {
         const savedMessages = localStorage.getItem(`chatHistory_${agent.id}`);
         if (savedMessages) {
@@ -71,16 +73,31 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ agent, categories,
         setInput('');
         setIsTyping(true);
 
+        const useLanguageBot = shouldUseLanguageBot(userLanguage);
+
         try {
-            const result = await executeAgentQuery(userInput, agent, agents, categories);
+            // When app language is not English, hand off to translation before Kai so Kai always sees English; no extra bot when English to avoid data corruption.
+            const queryForKai = useLanguageBot
+                ? await translateToEnglish(userInput, userLanguage)
+                : userInput;
+
+            const result = await executeAgentQuery(queryForKai, agent, agents, categories);
+
             if (result.selectedAgent && result.selectedAgent.id !== agent.id) {
                 onAgentChange(result.selectedAgent);
             }
+
+            // When app language is not English, translate Kai's reply back to the user's language before showing.
+            let replyToShow = result.reply;
+            if (useLanguageBot) {
+                replyToShow = await translateFromEnglish(result.reply, userLanguage);
+            }
+
             const diagnostics = `(Route confidence: ${Math.round(result.categoryDecision.confidence * 100)}% | ${result.categoryDecision.reason})`;
             setIsTyping(false);
             setMessages((prev) => [
                 ...prev,
-                { role: 'assistant', content: `${result.reply}\n\n${diagnostics}` }
+                { role: 'assistant', content: `${replyToShow}\n\n${diagnostics}` }
             ]);
         } catch {
             setIsTyping(false);
