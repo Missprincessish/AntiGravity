@@ -4,7 +4,7 @@ import { MainLayout } from '@repo/ui/layouts/MainLayout';
 import { Sidebar } from '@repo/ui/components/Sidebar';
 import { KaiWelcome } from '@repo/ui/components/KaiWelcome';
 import { ChatInterface } from '@repo/ui/components/ChatInterface';
-import { CATEGORIES, AGENTS } from '@repo/core/registry';
+import { CATEGORIES, AGENTS } from '@repo/core';
 import { AgentConfig } from '@repo/core/types';
 import Analytics from './pages/Analytics';
 
