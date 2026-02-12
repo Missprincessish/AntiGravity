@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "../../../.."
+		}
+	],
+	"settings": {
+		"pieces.autocomplete": true,
+		"liveServer.settings.port": 5501,
+		"github.branchProtection": false
+	}
+}

@@ -1,0 +1,107 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          50: '#f5f7ff',
+          100: '#ebf0fe',
+          200: '#ced9fd',
+          500: '#6366f1', // Primary Indigo
+          600: '#4f46e5',
+          700: '#4338ca',
+          900: '#312e81',
+        },
+        surface: {
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          900: '#0f172a',
+        }
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+      },
+    },
+  },
+  plugins: [],
+}
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
+interface MainLayoutProps {
+  children: React.ReactNode;
+}
+
+const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  return (
+    <div className="min-h-screen bg-surface-50 flex flex-col">
+      <header className="sticky top-0 z-50 border-b bg-white/80 backdrop-blur-md">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-2 font-bold text-xl text-brand-900">
+            <div className="w-8 h-8 bg-brand-600 rounded-lg" />
+            <span>AppCore</span>
+          </Link>
+
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+            <Link to="/" className="hover:text-brand-600 transition-colors">Dashboard</Link>
+            <Link to="/projects" className="hover:text-brand-600 transition-colors">Projects</Link>
+            <Link to="/settings" className="hover:text-brand-600 transition-colors">Settings</Link>
+          </nav>
+
+          <div className="flex items-center gap-4">
+            <button className="hidden md:block px-4 py-2 text-sm font-medium text-white bg-brand-600 rounded-lg hover:bg-brand-700 transition-all">
+              New Action
+            </button>
+            
+            {/* Mobile Menu Toggle */}
+            <button 
+              className="md:hidden p-2 text-slate-600"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Nav */}
+        {isMenuOpen && (
+          <div className="md:hidden border-t bg-white p-4 space-y-4">
+            <Link to="/" className="block text-base font-medium text-slate-600">Dashboard</Link>
+            <Link to="/projects" className="block text-base font-medium text-slate-600">Projects</Link>
+            <Link to="/settings" className="block text-base font-medium text-slate-600">Settings</Link>
+          </div>
+        )}
+      </header>
+
+      <main className="flex-1 container mx-auto px-4 py-8">
+        {children}
+      </main>
+    </div>
+  );
+};
+
+export default MainLayout;/my-web-app
+├── src/
+│   ├── assets/         # Images, fonts, and global CSS
+│   ├── components/     # Reusable UI components (Buttons, Inputs, etc.)
+│   ├── hooks/          # Custom React hooks for shared logic
+│   ├── layouts/        # Page wrappers (the Layout component we discussed)
+│   ├── pages/          # Individual route views
+│   ├── services/       # API calls and external integrations
+│   ├── types/          # TypeScript interfaces and types
+│   ├── utils/          # Helper functions
+│   ├── App.tsx         # Main routing and provider setup
+│   └── main.tsx        # Entry point
+├── tailwind.config.js
+├── tsconfig.json
+└── package.json

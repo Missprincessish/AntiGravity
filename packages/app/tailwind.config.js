@@ -8,23 +8,25 @@ export default {
     theme: {
         extend: {
             colors: {
-                calm: {
-                    bg: '#f2f5f1',
-                    surface: '#e4ebe2',
-                    primary: '#7a9e7a',
-                    text: '#2d3a2d',
+                ocean: {
+                    bg: '#e9f8f6',
+                    surface: '#d8f0eb',
+                    primary: '#2aa79b',
+                    text: '#123b42',
                 },
-                fun: {
-                    bg: '#fff9f0',
-                    surface: '#fcecd7',
-                    primary: '#ff6b6b',
-                    text: '#4a3728',
+                sunset: {
+                    bg: '#fff1e8',
+                    surface: '#ffd9c5',
+                    primary: '#ff5f3d',
+                    accent: '#ff9a3d',
+                    text: '#4d1f1b',
                 },
                 neon: {
-                    blue: '#00f3ff',
+                    teal: '#14f1d9',
                     pink: '#ff00ff',
                     purple: '#bc13fe',
                     green: '#39ff14',
+                    blue: '#00b7ff',
                 },
                 brand: {
                     50: '#f5f7ff',
@@ -46,18 +48,18 @@ export default {
                 sans: ['Inter', 'system-ui', 'sans-serif'],
             },
             boxShadow: {
-                'neon-blue': '0 0 5px #00f3ff, 0 0 20px rgba(0, 243, 255, 0.3)',
+                'neon-blue': '0 0 5px #00b7ff, 0 0 20px rgba(0, 183, 255, 0.3)',
                 'neon-pink': '0 0 5px #ff00ff, 0 0 20px rgba(255, 0, 255, 0.3)',
                 'neon-purple': '0 0 10px #bc13fe',
-                'calm-soft': '0 4px 14px 0 rgba(122, 158, 122, 0.1)',
-                'fun-glow': '0 4px 14px 0 rgba(255, 107, 107, 0.2)',
+                'ocean-soft': '0 4px 14px 0 rgba(42, 167, 155, 0.22)',
+                'sunset-glow': '0 4px 14px 0 rgba(255, 95, 61, 0.28)',
             }
         },
     },
     plugins: [
         function ({ addVariant }) {
-            addVariant('calm', '.calm &')
-            addVariant('fun', '.fun &')
+            addVariant('ocean', '.ocean &')
+            addVariant('sunset', '.sunset &')
         }
     ],
 }
