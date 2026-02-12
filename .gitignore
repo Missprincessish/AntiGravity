@@ -1,14 +1,34 @@
-# Dependencies
-**/node_modules
-**/.vite
+# --- Dependencies ---
+# Never upload your 100MB+ node_modules folder
+node_modules/
+.pnpm-store/
+pnpm-lock.yaml
 
-# IDEs
-.vscode/
+# --- Security & Secrets (THE MOST IMPORTANT PART) ---
+# This hides your Gemini/OpenAI API keys
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+.secret/
 
-# Misc
+# --- Build Outputs ---
+# Don't upload the "compiled" app, just the source code
+dist/
+build/
+out/
+.next/
+
+# --- Editor & OS Trash ---
+# Keeps your repo clean from Mac/Windows system files
 .DS_Store
-*.docx
-*.jpeg
-*.png
-project_status.txt
-Guru tools list.txt
+Thumbs.db
+.vscode/
+.idea/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# --- Cursor Specifics ---
+.cursor/
