@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -25,5 +25,4 @@ jobs:
         run: pnpm install
 
       - name: Build
-        
-run: echo "Workspace installs successfully"
+        run: echo "Workspace installs successfully"
