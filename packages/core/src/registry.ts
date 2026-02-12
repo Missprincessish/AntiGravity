@@ -1,15 +1,19 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { CategoryRegistry, AgentConfig } from './types';
 import { BaseTool } from './base';
 import { AlertService, ConsoleNotificationChannel } from './alertService';
 
 // FIXME: In a real app, you would not hardcode this.
 // You would use a secret management system.
-const API_KEY = process.env.GEMINI_API_KEY;
+const API_KEY = (globalThis as any)?.process?.env?.GEMINI_API_KEY;
 if (!API_KEY) {
-    throw new Error("GEMINI_API_KEY environment variable not set.");
+    console.warn('[Core] GEMINI_API_KEY is not set. AI-backed tools will return fallback responses until a key is configured.');
 }
-export const genAI = new GoogleGenerativeAI(API_KEY);
+
+export async function getGenAI() {
+    if (!API_KEY) return null;
+    const { GoogleGenerativeAI } = await import('@google/generative-ai');
+    return new GoogleGenerativeAI(API_KEY);
+}
 
 export const CATEGORIES: CategoryRegistry = {
     stability: {
@@ -181,8 +185,13 @@ class AgentTool extends BaseTool {
     protected async executeInternal(input: { prompt: string }): Promise<any> {
         console.log(`[${this.id}] Executing with input:`, input);
 
+        const genAI = await getGenAI();
+        if (!genAI) {
+            return 'AI is not configured yet (missing GEMINI_API_KEY). Please set the key and try again.';
+        }
+
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-        
+
         const fullPrompt = `
 ${this.agentConfig.systemPrompt}
 
