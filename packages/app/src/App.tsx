@@ -9,6 +9,8 @@ import { AgentConfig } from '@repo/core/types';
 import Analytics from './pages/Analytics';
 
 const LANGUAGE_STORAGE_KEY = 'kai_app_language';
+const THEME_STORAGE_KEY = 'kai_app_theme';
+type ThemeType = 'light' | 'dark' | 'deepdark' | 'neon' | 'sunset' | 'ocean';
 
 function ChatView() {
     const [activeAgent, setActiveAgent] = useState<AgentConfig | null>(() => {
@@ -30,6 +32,11 @@ function ChatView() {
         return localStorage.getItem(LANGUAGE_STORAGE_KEY) || 'en';
     });
 
+    const [theme, setTheme] = useState<ThemeType>(() => {
+        const saved = localStorage.getItem(THEME_STORAGE_KEY) as ThemeType | null;
+        return saved || 'neon';
+    });
+
     useEffect(() => {
         if (activeAgent) {
             localStorage.setItem('activeAgent', JSON.stringify(activeAgent));
@@ -42,6 +49,10 @@ function ChatView() {
         localStorage.setItem(LANGUAGE_STORAGE_KEY, userLanguage);
     }, [userLanguage]);
 
+    useEffect(() => {
+        localStorage.setItem(THEME_STORAGE_KEY, theme);
+    }, [theme]);
+
     const categoriesArray = Object.values(CATEGORIES);
 
     const handleSetAgent = (agent: AgentConfig | null) => {
@@ -51,6 +62,7 @@ function ChatView() {
     return (
         <MainLayout
             logoText="KaiOS"
+            theme={theme}
             sidebarContent={
                 <>
                     <Sidebar
@@ -60,11 +72,13 @@ function ChatView() {
                             const agent = AGENTS.find(a => a.id === id);
                             if (agent) handleSetAgent(agent);
                         }}
+                        theme={theme}
+                        onThemeChange={setTheme}
                         userLanguage={userLanguage}
                         onLanguageChange={setUserLanguage}
                     />
                     <div className="p-4">
-                        <Link to="/analytics" className="text-blue-500 hover:underline">Analytics Dashboard</Link>
+                        <Link to="/analytics" className="inline-block glass-button rounded-xl px-4 py-2 text-slate-100 hover:underline">Analytics Dashboard</Link>
                     </div>
                 </>
             }

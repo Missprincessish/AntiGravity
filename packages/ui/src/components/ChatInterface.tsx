@@ -116,25 +116,25 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ agent, categories,
     };
 
     return (
-        <div className="flex flex-col h-full max-w-3xl mx-auto bg-white dark:bg-slate-900 calm:bg-calm-surface fun:bg-fun-surface shadow-sm transition-all duration-500">
+        <div className="flex flex-col h-full max-w-3xl mx-auto glass-panel rounded-2xl my-4 overflow-hidden transition-all duration-500">
             {/* Chat Header */}
-            <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-900 calm:bg-calm-surface fun:bg-fun-surface">
+            <div className="p-4 border-b border-white/20 flex items-center justify-between glass-subtle">
                 <div className="flex items-center gap-3">
-                    <button onClick={onBack} className="text-brand-600 dark:text-neon-blue calm:text-calm-primary fun:text-fun-primary font-medium hover:underline text-sm">
+                    <button onClick={onBack} className="text-brand-600 dark:text-neon-blue font-medium hover:underline text-sm">
                         ← Back
                     </button>
-                    <h2 className="font-bold text-slate-900 dark:text-slate-100 calm:text-calm-text fun:text-fun-text">{agent.name}</h2>
+                    <h2 className="font-bold text-slate-900 dark:text-slate-100">{agent.name}</h2>
                 </div>
-                <div className="text-xs text-slate-500 dark:text-neon-blue bg-white dark:bg-slate-800 px-2 py-1 rounded border border-slate-200 dark:border-neon-blue/30">Kai Helper</div>
+                <div className="text-xs text-slate-100 glass-pill px-2 py-1 rounded border border-white/20">Kai Helper</div>
             </div>
 
             {/* Message Area */}
-            <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/30 dark:bg-slate-950/50 calm:bg-calm-bg/50 fun:bg-fun-bg/50">
+            <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-white/5">
                 {messages.map((m, i) => (
                     <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                         <div className={`max-w-[80%] p-4 rounded-2xl shadow-sm transition-all duration-300 ${m.role === 'user'
-                            ? 'bg-brand-600 dark:bg-neon-purple calm:bg-calm-primary fun:bg-fun-primary text-white dark:text-slate-900 rounded-tr-none dark:shadow-neon-purple'
-                            : 'bg-white dark:bg-slate-800 calm:bg-white fun:bg-white text-slate-800 dark:text-slate-200 border border-slate-100 dark:border-slate-700 rounded-tl-none shadow-sm'
+                            ? 'glass-button text-white rounded-tr-none dark:shadow-neon-purple'
+                            : 'glass-subtle text-slate-100 border border-white/25 rounded-tl-none shadow-sm'
                             }`}>
                             <p className="text-sm leading-relaxed">{m.content}</p>
                         </div>
@@ -142,11 +142,11 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ agent, categories,
                 ))}
                 {isTyping && (
                     <div className="flex justify-start animate-in fade-in slide-in-from-left-2">
-                        <div className="bg-white dark:bg-slate-800 calm:bg-white fun:bg-white p-4 rounded-2xl rounded-tl-none border border-slate-100 dark:border-slate-700 shadow-sm">
+                        <div className="glass-subtle p-4 rounded-2xl rounded-tl-none border border-white/25 shadow-sm">
                             <div className="flex gap-1.5">
-                                <span className="w-1.5 h-1.5 rounded-full bg-brand-600 dark:bg-neon-blue calm:bg-calm-primary fun:bg-fun-primary animate-bounce [animation-delay:-0.3s]"></span>
-                                <span className="w-1.5 h-1.5 rounded-full bg-brand-600 dark:bg-neon-blue calm:bg-calm-primary fun:bg-fun-primary animate-bounce [animation-delay:-0.15s]"></span>
-                                <span className="w-1.5 h-1.5 rounded-full bg-brand-600 dark:bg-neon-blue calm:bg-calm-primary fun:bg-fun-primary animate-bounce"></span>
+                                <span className="w-1.5 h-1.5 rounded-full bg-brand-600 dark:bg-neon-blue animate-bounce [animation-delay:-0.3s]"></span>
+                                <span className="w-1.5 h-1.5 rounded-full bg-brand-600 dark:bg-neon-blue animate-bounce [animation-delay:-0.15s]"></span>
+                                <span className="w-1.5 h-1.5 rounded-full bg-brand-600 dark:bg-neon-blue animate-bounce"></span>
                             </div>
                         </div>
                     </div>
@@ -154,16 +154,16 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ agent, categories,
             </div>
 
             {/* Input Area */}
-            <form onSubmit={handleSend} className="p-4 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 calm:bg-calm-surface fun:bg-fun-surface">
+            <form onSubmit={handleSend} className="p-4 border-t border-white/20 glass-subtle">
                 <div className="flex gap-2">
                     <input
                         type="text"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         placeholder="Type your message here..."
-                        className="flex-1 p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-transparent dark:text-white calm:text-calm-text fun:text-fun-text outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-neon-blue transition-all text-sm"
+                        className="flex-1 p-3 rounded-xl glass-input text-white placeholder:text-slate-300/70 outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-neon-blue transition-all text-sm"
                     />
-                    <button className="bg-brand-600 dark:bg-slate-800 calm:bg-calm-primary fun:bg-fun-primary dark:border dark:border-neon-blue dark:text-neon-blue text-white px-6 py-2 rounded-xl font-medium hover:opacity-90 dark:hover:shadow-neon-blue transition-all">
+                    <button className="glass-button text-white px-6 py-2 rounded-xl font-medium hover:opacity-95 dark:hover:shadow-neon-blue transition-all">
                         Send
                     </button>
                 </div>
