@@ -7,8 +7,6 @@
     },
     "dev": {
       "cache": false
-    },
-    "lint": {},
-    "test": {}
+    }
   }
 }
