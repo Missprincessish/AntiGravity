@@ -4,7 +4,7 @@
  * and possible data corruption from an extra bot pass.
  */
 
-const API_KEY = process.env.GEMINI_API_KEY;
+const API_KEY = (globalThis as any)?.process?.env?.GEMINI_API_KEY;
 
 /** Names used in translation prompts; order follows US Census top languages. Chinese has both Mandarin and Cantonese. */
 const LANGUAGE_NAMES: Record<string, string> = {

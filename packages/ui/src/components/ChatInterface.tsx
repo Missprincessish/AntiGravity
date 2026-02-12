@@ -21,14 +21,21 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ agent, categories,
     const [messages, setMessages] = useState<Message[]>(() => {
         const savedMessages = localStorage.getItem(`chatHistory_${agent.id}`);
         if (savedMessages) {
-            return JSON.parse(savedMessages);
+            try {
+                const parsed = JSON.parse(savedMessages);
+                if (Array.isArray(parsed)) {
+                    return parsed;
+                }
+            } catch {
+                localStorage.removeItem(`chatHistory_${agent.id}`);
+            }
         }
         return [{
             role: 'assistant',
             content: `Hello! I am your ${agent.name} helper. I can help you with ${agent.description.toLowerCase()} How can I help you today?`
         }];
     });
-    
+
     useEffect(() => {
         localStorage.setItem(`chatHistory_${agent.id}`, JSON.stringify(messages));
     }, [messages, agent.id]);
@@ -49,7 +56,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ agent, categories,
         if (!input.trim()) return;
 
         const userInput = input.trim();
-        
+
         // URL extraction and validation
         const urlRegex = /(https?:\/\/[^\s]+)/g;
         const urls = userInput.match(urlRegex);

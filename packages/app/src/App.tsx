@@ -14,8 +14,14 @@ function ChatView() {
     const [activeAgent, setActiveAgent] = useState<AgentConfig | null>(() => {
         const savedAgent = localStorage.getItem('activeAgent');
         if (savedAgent) {
-            const agent = AGENTS.find(a => a.id === JSON.parse(savedAgent).id);
-            return agent || null;
+            try {
+                const parsed = JSON.parse(savedAgent);
+                const agent = AGENTS.find(a => a.id === parsed?.id);
+                return agent || null;
+            } catch {
+                localStorage.removeItem('activeAgent');
+                return null;
+            }
         }
         return null;
     });
